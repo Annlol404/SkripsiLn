@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-const NMAX = 100
+const NMAX = 1000
 
 type Skripsi struct {
 	NIM         int
@@ -194,7 +194,7 @@ func editData(jumlahData int) daftar {
 
 	var nomor, index, i int
 
-	lihatData(jumlahData)
+	tampilData(jumlahData)
 
 	if jumlahData == 0 {
 		return dataSkripsi
@@ -251,7 +251,7 @@ func hapusData(jumlahData int) (daftar, int) {
 
 	var nomor, index, i int
 
-	lihatData(jumlahData)
+	tampilData(jumlahData)
 
 	if jumlahData == 0 {
 		return dataSkripsi, jumlahData
@@ -395,7 +395,7 @@ func sequentialJudul(jumlahData int, keyword string){
 }
 
 func binaryNama(jumlahData int, keyword string){
-	var left, right, mid, found int
+	var left, right, mid, found, i, start, end int
 	
 	selectionNamaAscending(jumlahData)
 	left = 0
@@ -414,21 +414,31 @@ func binaryNama(jumlahData int, keyword string){
 	}
 			
 	if found != -1{
-		fmt.Println("\nData Ditemukan")
-		fmt.Println("NIM          :", dataSkripsi[mid].NIM)
-		fmt.Println("Nama        :", dataSkripsi[mid].Nama)
-		fmt.Println("Judul       :", dataSkripsi[mid].Judul)
-		fmt.Println("Pembimbing  :", dataSkripsi[mid].Pembimbing)
-		fmt.Println("Topik       :", dataSkripsi[mid].Topik)
-		fmt.Println("Status      :", dataSkripsi[mid].Status)
-		fmt.Println("Tahun       :", dataSkripsi[mid].Tahun)	
+		start = found
+		for start > 0 && dataSkripsi[start-1].Nama == keyword{
+			start--
+		}
+		end = found
+		for end < jumlahData-1 && dataSkripsi[end+1].Nama == keyword{
+			end++
+		}
+		for i = start; i <= end; i++{
+			fmt.Println("\nData Ditemukan")
+			fmt.Println("NIM          :", dataSkripsi[i].NIM)
+			fmt.Println("Nama        :", dataSkripsi[i].Nama)
+			fmt.Println("Judul       :", dataSkripsi[i].Judul)
+			fmt.Println("Pembimbing  :", dataSkripsi[i].Pembimbing)
+			fmt.Println("Topik       :", dataSkripsi[i].Topik)
+			fmt.Println("Status      :", dataSkripsi[i].Status)
+			fmt.Println("Tahun       :", dataSkripsi[i].Tahun)	
+		}
 	}else{
 		fmt.Println("Data Tidak Ditemukan")
 	}
 }
 
 func binaryJudul(jumlahData int, keyword string){
-	var left, right, mid, found int
+	var left, right, mid, found, i, start, end int
 	
 	selectionJudulAscending(jumlahData)
 	left = 0
@@ -447,14 +457,24 @@ func binaryJudul(jumlahData int, keyword string){
 	}
 			
 	if found != -1{
-		fmt.Println("\nData Ditemukan")
-		fmt.Println("NIM          :", dataSkripsi[mid].NIM)
-		fmt.Println("Nama        :", dataSkripsi[mid].Nama)
-		fmt.Println("Judul       :", dataSkripsi[mid].Judul)
-		fmt.Println("Pembimbing  :", dataSkripsi[mid].Pembimbing)
-		fmt.Println("Topik       :", dataSkripsi[mid].Topik)
-		fmt.Println("Status      :", dataSkripsi[mid].Status)
-		fmt.Println("Tahun       :", dataSkripsi[mid].Tahun)	
+		start = found
+		for start > 0 && dataSkripsi[start-1].Judul == keyword{
+			start--
+		}
+		end = found
+		for end < jumlahData-1 && dataSkripsi[end+1].Judul == keyword{
+			end++
+		}
+		for i = start; i <= end; i++{
+			fmt.Println("\nData Ditemukan")
+			fmt.Println("NIM          :", dataSkripsi[i].NIM)
+			fmt.Println("Nama        :", dataSkripsi[i].Nama)
+			fmt.Println("Judul       :", dataSkripsi[i].Judul)
+			fmt.Println("Pembimbing  :", dataSkripsi[i].Pembimbing)
+			fmt.Println("Topik       :", dataSkripsi[i].Topik)
+			fmt.Println("Status      :", dataSkripsi[i].Status)
+			fmt.Println("Tahun       :", dataSkripsi[i].Tahun)	
+		}	
 	}else{
 		fmt.Println("Data Tidak Ditemukan")
 	}
@@ -466,92 +486,93 @@ func urutData(jumlahData int){
 
 	if jumlahData == 0 {
 		fmt.Println("Belum ada data.")
-	}
-
-	fmt.Println("\n+==========================================+")
-	fmt.Println("|            URUTKAN DATA                  |")
-	fmt.Println("+==========================================+")
-	fmt.Println("| 1. Urutkan Berdasarkan Nama              |")
-	fmt.Println("| 2. Urutkan Berdasarkan Tahun             |")
-	fmt.Println("+==========================================+")
-
-	fmt.Print("Pilih metode pengurutan: ")
-	fmt.Scan(&pilihan)
-	
-	fmt.Println("\n+==========================================+")
-	fmt.Println("|            URUTKAN DATA                  |")
-	fmt.Println("+==========================================+")
-	fmt.Println("| 1. Urutkan Menggunakan Selection Sort    |")
-	fmt.Println("| 2. Urutkan Menggunakan Insertion Sort    |")
-	fmt.Println("+==========================================+")
-
-	fmt.Print("Pilih metode pengurutan: ")
-	fmt.Scan(&pilihmetode)
-
-	fmt.Println("\n+==========================================+")
-	fmt.Println("|            URUTKAN DATA                  |")
-	fmt.Println("+==========================================+")
-	fmt.Println("| 1. Urutkan Secara Ascending              |")
-	fmt.Println("| 2. Urutkan Secara Descending             |")
-	fmt.Println("+==========================================+")
-
-	fmt.Print("Pilih metode pengurutan: ")
-	fmt.Scan(&pilihurutan)
-	
-	if pilihan == 1 {
-		if pilihmetode == 1{
-			if pilihurutan == 1{
-				selectionNamaAscending(jumlahData)
-				
-				fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Selection Sort Secara Ascending.")
-			}else if pilihurutan == 2{
-				selectionNamaDescending(jumlahData)
-				fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Selection Sort Secara Descending.")
-			}else{
-				fmt.Println("Pilihan Tidak valid.")
-			}
-		}else if pilihmetode == 2{
-			if pilihurutan == 1{
-				insertionNamaAscending(jumlahData)
-				fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Insertion Sort Secara Ascending.")
-			}else if pilihurutan == 2{
-				insertionNamaDescending(jumlahData)
-				fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Insertion Sort Secara Descending.")
-			}else{
-				fmt.Println("Pilihan Tidak valid.")
-			}
-		}else{
-			fmt.Println("Pilihan Tidak valid.")
-		}
-	}else if pilihan == 2{
-		if pilihmetode == 1{
-			if pilihurutan == 1{
-				selectionTahunAscending(jumlahData)
-				fmt.Println("Data berhasil diurutkan berdasarkan Tahun Menggunakan Selection Sort Secara Ascending.")
-			}else if pilihurutan == 2{
-				selectionTahunDescending(jumlahData)
-				fmt.Println("Data berhasil diurutkan berdasarkan Tahun Menggunakan Selection Sort Secara Descending.")
-			}else{
-				fmt.Println("Pilihan Tidak valid.")
-			}
-		}else if pilihmetode == 2{
-			if pilihurutan == 1{
-				insertionTahunAscending(jumlahData)
-				fmt.Println("Data berhasil diurutkan berdasarkan Tahun Menggunakan Insertion Sort Secara Ascending.")
-			}else if pilihurutan == 2{
-				insertionTahunDescending(jumlahData)
-				fmt.Println("Data 2berhasil diurutkan berdasarkan Tahun Menggunakan Insertion Sort Secara Descending.")
-			}else{
-				fmt.Println("Pilihan Tidak valid.")
-			}
-		}else{
-			fmt.Println("Pilihan Tidak valid.")
-		}
 	}else{
-		fmt.Println("Pilihan Tidak valid.")
+
+		fmt.Println("\n+==========================================+")
+		fmt.Println("|            URUTKAN DATA                  |")
+		fmt.Println("+==========================================+")
+		fmt.Println("| 1. Urutkan Berdasarkan Nama              |")
+		fmt.Println("| 2. Urutkan Berdasarkan Tahun             |")
+		fmt.Println("+==========================================+")
+
+		fmt.Print("Pilih metode pengurutan: ")
+		fmt.Scan(&pilihan)
+		
+		fmt.Println("\n+==========================================+")
+		fmt.Println("|            URUTKAN DATA                  |")
+		fmt.Println("+==========================================+")
+		fmt.Println("| 1. Urutkan Menggunakan Selection Sort    |")
+		fmt.Println("| 2. Urutkan Menggunakan Insertion Sort    |")
+		fmt.Println("+==========================================+")
+
+		fmt.Print("Pilih metode pengurutan: ")
+		fmt.Scan(&pilihmetode)
+
+		fmt.Println("\n+==========================================+")
+		fmt.Println("|            URUTKAN DATA                  |")
+		fmt.Println("+==========================================+")
+		fmt.Println("| 1. Urutkan Secara Ascending              |")
+		fmt.Println("| 2. Urutkan Secara Descending             |")
+		fmt.Println("+==========================================+")
+
+		fmt.Print("Pilih metode pengurutan: ")
+		fmt.Scan(&pilihurutan)
+		
+		if pilihan == 1 {
+			if pilihmetode == 1{
+				if pilihurutan == 1{
+					selectionNamaAscending(jumlahData)
+					
+					fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Selection Sort Secara Ascending.")
+				}else if pilihurutan == 2{
+					selectionNamaDescending(jumlahData)
+					fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Selection Sort Secara Descending.")
+				}else{
+					fmt.Println("Pilihan Tidak valid.")
+				}
+			}else if pilihmetode == 2{
+				if pilihurutan == 1{
+					insertionNamaAscending(jumlahData)
+					fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Insertion Sort Secara Ascending.")
+				}else if pilihurutan == 2{
+					insertionNamaDescending(jumlahData)
+					fmt.Println("Data berhasil diurutkan berdasarkan Nama Menggunakan Insertion Sort Secara Descending.")
+				}else{
+					fmt.Println("Pilihan Tidak valid.")
+				}
+			}else{
+				fmt.Println("Pilihan Tidak valid.")
+			}
+		}else if pilihan == 2{
+			if pilihmetode == 1{
+				if pilihurutan == 1{
+					selectionTahunAscending(jumlahData)
+					fmt.Println("Data berhasil diurutkan berdasarkan Tahun Menggunakan Selection Sort Secara Ascending.")
+				}else if pilihurutan == 2{
+					selectionTahunDescending(jumlahData)
+					fmt.Println("Data berhasil diurutkan berdasarkan Tahun Menggunakan Selection Sort Secara Descending.")
+				}else{
+					fmt.Println("Pilihan Tidak valid.")
+				}
+			}else if pilihmetode == 2{
+				if pilihurutan == 1{
+					insertionTahunAscending(jumlahData)
+					fmt.Println("Data berhasil diurutkan berdasarkan Tahun Menggunakan Insertion Sort Secara Ascending.")
+				}else if pilihurutan == 2{
+					insertionTahunDescending(jumlahData)
+					fmt.Println("Data 2berhasil diurutkan berdasarkan Tahun Menggunakan Insertion Sort Secara Descending.")
+				}else{
+					fmt.Println("Pilihan Tidak valid.")
+				}
+			}else{
+				fmt.Println("Pilihan Tidak valid.")
+			}
+		}else{
+			fmt.Println("Pilihan Tidak valid.")
+		}
+		
+		lihatData(jumlahData)
 	}
-	
-	lihatData(jumlahData)
 }
 
 func selectionJudulAscending(jumlahData int){
